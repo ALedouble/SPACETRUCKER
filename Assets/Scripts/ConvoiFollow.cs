@@ -8,7 +8,7 @@ public class ConvoiFollow : MonoBehaviour
 	public PlayerMovement playerScript;
 	public GameObject Trucker;
 	public float smoothedSpeed;
-	public Vector3 offset;
+
 	
 	float v;
 	private bool returnRotation;
