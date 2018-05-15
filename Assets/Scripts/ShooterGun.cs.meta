@@ -3,8 +3,14 @@ guid: ab62fc5274307ed4a80606e096e3111c
 timeCreated: 1521541112
 licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - turret: {instanceID: 0}
+  - projectile: {fileID: 1302726050053600, guid: 13f51de813fb9054e8bb5d594252d360,
+      type: 2}
+  - playerScript: {instanceID: 0}
+  - Turret: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

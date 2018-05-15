@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 61795335499498646}
   - component: {fileID: 50625035787081484}
   - component: {fileID: 114306963645804064}
+  - component: {fileID: 114289378155465108}
   m_Layer: 0
   m_Name: Convoi
   m_TagString: Untagged
@@ -271,6 +272,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.6, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114289378155465108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1537371090127240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91419dacd78563845b58bb5872b0a70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shield: 0
+  CanTakeDamage: 1
 --- !u!114 &114306963645804064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,6 +298,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basTrucker: {fileID: 0}
   playerScript: {fileID: 0}
+  Trucker: {fileID: 0}
+  smoothedSpeed: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!212 &212840671604487640
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -293,6 +310,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -308,6 +326,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
