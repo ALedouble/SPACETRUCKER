@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour {
 	public bool playerTarget;
 	public GameObject Turret;
 	public GameObject[] door;
+	public float range;
 	
 	public GameObject player;
-	Rigidbody2D rgb;
 	Rigidbody2D rgbTrucker;
 	public float h;
 	float v;
@@ -24,14 +24,13 @@ public class PlayerMovement : MonoBehaviour {
 	bool door1 = false;
 	bool door2 = false;
 	bool door3 = false;
-
+	float maxSpeed = 5f;
 	
 	
 	
 	void Start()
 	{
 		player = GameObject.Find("Player");
-		rgb = GetComponent<Rigidbody2D> ();
 		rgbTrucker = Trucker.GetComponent<Rigidbody2D> ();
 		Physics2D.gravity = Vector2.zero;
 	}
@@ -44,15 +43,28 @@ public class PlayerMovement : MonoBehaviour {
 			playerTarget = true;
 		}
 		
-		Trucker.transform.Translate(0.05f, 0, 0, Space.Self);
-		
 		h = Input.GetAxis ("Horizontal");
 		v = Input.GetAxis ("Vertical");
 		rH = Input.GetAxis("RHorizontal");
 		
-		if (player == GameObject.Find("Player")){
-			rgb.velocity = new Vector3(-h*speedPlayer, -v*speedPlayer, 0);
+		if (player == GameObject.Find ("Player")) {
+			if ( v < 0 && transform.localPosition.y > -1){
+				transform.Translate (v * -speedPlayer, 0, 0);
+			}
+
+			if ( v > 0 && transform.localPosition.y < 1){
+				transform.Translate (v * -speedPlayer, 0, 0);
+			}
+
+			if ( h < 0 && transform.localPosition.x > -4){
+				transform.Translate (0, h * speedPlayer, 0);
+			}
+
+			if ( h > 0 && transform.localPosition.x < 4){
+				transform.Translate (0, h * speedPlayer, 0);
+			}
 		}
+
 		
 		if (player == GameObject.Find("Trucker")){
 
@@ -107,92 +119,106 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
 
-
-	}
-	
-	void OnTriggerStay2D(Collider2D other)
-	{
-		if (gameObject.name == "Player" && other.gameObject.name == "EmptyBox") 
-		{
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {				
-				player = GameObject.Find ("Trucker");
-			}
-		}
-
-		if (gameObject.name == "Player" && other.gameObject.name == "Turret") 
-		{
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {				
-				player = GameObject.Find ("Turret");
-			}
-		}
-
-		if (Input.GetButtonUp ("exitTrucker") && player == GameObject.Find ("Turret")) 
-		{				
-			player = GameObject.Find ("Player");
-			rgbTrucker.velocity = new Vector3 (0, 0, 0);
-			playerTarget = false;
-		}
-
-		if (Input.GetButtonUp ("exitTrucker") && player == GameObject.Find ("Trucker")) 
-		{				
-			player = GameObject.Find ("Player");
-			rgbTrucker.velocity = new Vector3 (0, 0, 0);
-			playerTarget = false;
-		}
-
-		if (gameObject.name == "Player" && other.gameObject.name == "Door") {
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
-				StartCoroutine (Teleport());
-				door0 = true;
-			}
-		}
-
-		if (gameObject.name == "Player" && other.gameObject.name == "Door2") {
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
-				StartCoroutine (Teleport());
-				door1 = true;
-			}
-		}
-
-		if (gameObject.name == "Player" && other.gameObject.name == "Door3") {
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
-				StartCoroutine (Teleport());
-				door2 = true;
-			}
-		}
-
-		if (gameObject.name == "Player" && other.gameObject.name == "Door4") {
-			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
-				StartCoroutine (Teleport ());
-				door3 = true;
-			}
-		}
-
-
-
+		OnModul ();
 	}
 
-	IEnumerator Teleport(){
-		yield return new WaitForSeconds (1);
-		if (door0 == true){
-			transform.position = door[1].transform.position;
-			door0 = false; 
-		}
 
-		if (door1 == true){
-			transform.position = door[0].transform.position;
-			door1 = false; 
-		}
 
-		if (door2 == true){
-			transform.position = door[2].transform.position;
-			door2 = false; 
+	void OnModul(){
+		RaycastHit hit;
+		if (Physics.Raycast (transform.position, transform.right, out hit, range)){
+			print (hit.transform.name);
 		}
+	}
 
-		if (door3 == true){
-			transform.position = door[3].transform.position;
-			door3 = false; 
-		}
+//	void OnTriggerStay2D(Collider2D other)
+//	{
+//		if (gameObject.name == "Player" && other.gameObject.name == "EmptyBox") 
+//		{
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {				
+//				player = GameObject.Find ("Trucker");
+//			}
+//		}
+//
+//		if (gameObject.name == "Player" && other.gameObject.name == "Turret") 
+//		{
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {				
+//				player = GameObject.Find ("Turret");
+//			}
+//		}
+//
+//		if (Input.GetButtonUp ("exitTrucker") && player == GameObject.Find ("Turret")) 
+//		{				
+//			player = GameObject.Find ("Player");
+//			rgbTrucker.velocity = new Vector3 (0, 0, 0);
+//			playerTarget = false;
+//		}
+//
+//		if (Input.GetButtonUp ("exitTrucker") && player == GameObject.Find ("Trucker")) 
+//		{				
+//			player = GameObject.Find ("Player");
+//			rgbTrucker.velocity = new Vector3 (0, 0, 0);
+//			playerTarget = false;
+//		}
+//
+//		if (gameObject.name == "Player" && other.gameObject.name == "Door") {
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
+//				StartCoroutine (Teleport());
+//				door0 = true;
+//			}
+//		}
+//
+//		if (gameObject.name == "Player" && other.gameObject.name == "Door2") {
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
+//				StartCoroutine (Teleport());
+//				door1 = true;
+//			}
+//		}
+//
+//		if (gameObject.name == "Player" && other.gameObject.name == "Door3") {
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
+//				StartCoroutine (Teleport());
+//				door2 = true;
+//			}
+//		}
+//
+//		if (gameObject.name == "Player" && other.gameObject.name == "Door4") {
+//			if (Input.GetButtonUp ("controlTrucker") && player == GameObject.Find ("Player")) {	
+//				StartCoroutine (Teleport ());
+//				door3 = true;
+//			}
+//		}
+//
+//
+//
+//	}
+
+//	IEnumerator Teleport(){
+//		yield return new WaitForSeconds (1);
+//		if (door0 == true){
+//			transform.position = door[1].transform.position;
+//			door0 = false; 
+//		}
+//
+//		if (door1 == true){
+//			transform.position = door[0].transform.position;
+//			door1 = false; 
+//		}
+//
+//		if (door2 == true){
+//			transform.position = door[2].transform.position;
+//			door2 = false; 
+//		}
+//
+//		if (door3 == true){
+//			transform.position = door[3].transform.position;
+//			door3 = false; 
+//		}
+//	}
+
+	void FixedUpdate(){
+		rgbTrucker.AddForce (transform.up * 1.5f);
+		Vector2 movement = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 	}
 }
 
