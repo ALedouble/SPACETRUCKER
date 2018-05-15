@@ -14,6 +14,5 @@ public class EnnemyHealth : MonoBehaviour {
 			Debug.Log(gameObject + "Dead");
 			Destroy (gameObject);
 		}
-
 	}
 }
