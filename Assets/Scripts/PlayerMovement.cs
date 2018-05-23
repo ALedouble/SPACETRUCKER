@@ -126,9 +126,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	void OnModul(){
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, transform.right, out hit, range)){
+		Vector3 endPosition = new Vector3 (10, 0, 0);
+		if (Physics.Raycast (transform.position, endPosition, out hit, range)){
 			print (hit.transform.name);
 		}
+		Debug.DrawRay (transform.position, endPosition, Color.red, 15f);
 	}
 
 //	void OnTriggerStay2D(Collider2D other)
